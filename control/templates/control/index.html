@@ -1,0 +1,156 @@
+{% load static from staticfiles %}
+<!DOCTYPE HTML>
+<html>
+<head>
+
+<!-- css -->
+<link rel="stylesheet" type="text/css" href=" {% static "control/bootstrap/dist/css/style.css" %}">
+<link rel="stylesheet" type="text/css" href=" {% static "control/bootstrap/dist/css/bootstrap.min.css" %}">
+<link rel="stylesheet" type="text/css" href=" {% static "control/bootstrap/dist/fonts/css/font-awesome.min.css" %}">
+
+<!-- script -->
+<script type="text/javascript" src=" {% static "control/bootstrap/dist/js/jquery-1.11.3.min.js" %}"></script>
+<script type="text/javascript" src=" {% static "control/bootstrap/dist/js/bootstrap.min.js" %}"></script>
+
+</head>
+<body>
+<div class="fill">
+	<p>{ HEVA } - voiture intelligente et rapide</p>
+	<!-- <ul class="pull-right">
+		<li><i class="fa fa-facebook"></i></li>
+		<li><i class="fa fa-twitter"></i></li>
+	</ul> -->
+</div>
+<nav class="navbar navbar-inverse" style="border-radius: 0 !important;">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Makerlab</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link</a></li>
+        <li><a href="#">Link</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<div class="row">
+	<!-- <div class="col-md-10 col-sm-10 col-xs-12 col-md-offset-1 col-sm-offset-1" style="background: white;"> -->
+	<div class="col-md-10 col-sm-10 col-xs-12 col-md-offset-1 col-sm-offset-1" style="">
+		<section class='galeria'>
+ 
+			<input type="radio" id="uno" value="1" name="tractor" checked='checked' class="input-design" />    
+			<input type="radio" id="dole" value="2" name="tractor" class="input-design" />      
+			<input type="radio" id="tele" value="3" name="tractor" class="input-design" />
+			  
+			  <article class='card una' style="padding: 20px;">
+			    <!-- <div class = "video" style = "background: #ddd; width: 100%; height: 100%;">
+			      <video src = "test.mp4" style = "width = 100%; ">
+			        <div class = "analog" style="background: yellow">
+			        </div>
+			      </video> 
+			    </div> -->
+			 
+			  </article>
+		</section>
+		<section style="margin-top: 10px; margin-bottom: 10px; padding: 10px;">
+			<table class="direction">
+				<tr>
+					<td>{{ text }}</td>
+					<td>
+						<form method="post" class="preventdefault">{% csrf_token %}
+							<input type="text" value="" name="up" style="display: none;">
+							<input class= "fa fa-angle-up" type="submit" value="&#xf106;">
+						</form>
+					</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>
+						<form method="post" class="preventdefault">{% csrf_token %}
+							<input type="text" value="" name="left" style="display: none;">
+							<input class= "fa fa-angle-left" type="submit" value="&#xf104;" name="left">
+						</form>
+					</td>
+					<td>
+						<form method="post" class="preventdefault">{% csrf_token %}
+							<input type="text" value="" name="stop" style="display: none;">
+							<input class= "fa fa-angle-left" type="submit" value="">
+						</form>
+					</td>
+					<td>
+						<form method="post" class="preventdefault">{% csrf_token %}
+							<input type="text" value="" name="right" style="display: none;">
+							<input class= "fa fa-angle-right" type="submit" value="&#xf105;" name="right">
+						</form>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td>
+						<form method="post" class="preventdefault">{% csrf_token %}
+							<input type="text" value="" name="down" style="display: none;">
+							<input class= "fa fa-angle-down" type="submit" value="&#xf107;" name="down">
+						</form>
+					</td>
+					<td></td>
+				</tr>
+			</table>
+		</section>
+	</div>
+</div>
+</body>
+	<script type="text/javascript">
+	
+// $('.preventdefault').submit(function(event){event.preventDefault();});
+	// function test(){
+		$('.preventdefault').submit(function(event){
+		    $.post('', $(this).serialize(), function(data){
+		    	// alert("hello world")
+		       // $('.message').html(data.message);
+		       // of course you can do something more fancy with your respone
+		    });
+		    event.preventDefault();
+		});  
+	// }
+	// $('.fa').mousedown(function(e){
+	//     // timeout = setInterval(function(){
+	//         // Do something continuously
+	//         console.log("vous avez executer cette partie")
+	//     	test();    
+	//     // }, 500);
+	//     //e.preventDefault();
+	//     return true;
+	// });
+
+	// function test1(){
+	// 	$('.stop').submit(function(event){
+	// 		$.post('', $(this).serialize(), function(data){
+	// 			console.log("stop execute")
+	// 	    });
+	// 		event.preventDefault()
+	// 	});	 
+	// }
+
+	// $('.fa').mouseup(function(){
+	// 	// console.log("stop execute")
+	// 		 test1();
+	//     return false;
+	// });
+
+	// $(document).ready(function(){
+	// 	$('.preventdefault').on('submit', function(event){
+	// 		event.preventDefault();
+	// 	});
+	// });
+	</script>
+</html>

@@ -1,0 +1,131 @@
+import sys
+import termios
+import contextlib
+
+import RPi.GPIO as GPIO
+from time import sleep
+import sys
+import Tkinter as tk
+ 
+GPIO.setmode(GPIO.BOARD)
+ 
+Motor1A = 16
+Motor1B = 18
+Motor1E = 22
+ 
+Motor2A = 23
+Motor2B = 21
+Motor2E = 19
+
+
+GPIO.setup(Motor1A,GPIO.OUT)
+GPIO.setup(Motor1B,GPIO.OUT)
+GPIO.setup(Motor1E,GPIO.OUT)
+ 
+GPIO.setup(Motor2A,GPIO.OUT)
+GPIO.setup(Motor2B,GPIO.OUT)
+GPIO.setup(Motor2E,GPIO.OUT)
+ 
+def foward(tf):
+	print "FOWARD"
+	GPIO.output(Motor1A,GPIO.LOW)
+	GPIO.output(Motor1B,GPIO.HIGH)
+	GPIO.output(Motor1E,GPIO.HIGH)
+		 
+	GPIO.output(Motor2A,GPIO.HIGH)
+	GPIO.output(Motor2B,GPIO.LOW)
+	GPIO.output(Motor2E,GPIO.HIGH)
+ 
+	sleep(tf)
+
+def backward(tf):
+	print "BACKWARD"
+	GPIO.output(Motor1A,GPIO.HIGH)
+	GPIO.output(Motor1B,GPIO.LOW)
+	GPIO.output(Motor1E,GPIO.HIGH)
+	 
+	GPIO.output(Motor2A,GPIO.LOW)
+	GPIO.output(Motor2B,GPIO.HIGH)
+	GPIO.output(Motor2E,GPIO.HIGH)
+	 
+	sleep(tf)
+
+def uTurnRight(tf):
+	print "U-TURN LEFT"
+	GPIO.output(Motor1A,GPIO.HIGH)
+	GPIO.output(Motor1B,GPIO.LOW)
+	GPIO.output(Motor1E,GPIO.HIGH)
+		 
+	GPIO.output(Motor2A,GPIO.HIGH)
+	GPIO.output(Motor2B,GPIO.LOW)
+	GPIO.output(Motor2E,GPIO.HIGH)
+ 
+	sleep(tf)
+
+def uTurnLeft(tf):
+	print "U-TURN RIGHT"
+	GPIO.output(Motor1A,GPIO.LOW)
+	GPIO.output(Motor1B,GPIO.HIGH)
+	GPIO.output(Motor1E,GPIO.HIGH)
+	 
+	GPIO.output(Motor2A,GPIO.LOW)
+	GPIO.output(Motor2B,GPIO.HIGH)
+	GPIO.output(Motor2E,GPIO.HIGH)
+	 
+	sleep(tf)
+
+def left(tf):
+	print "RIGHT"
+	GPIO.output(Motor1A,GPIO.LOW)
+	GPIO.output(Motor1B,GPIO.HIGH)
+	GPIO.output(Motor1E,GPIO.HIGH)
+	 
+	sleep(tf)
+
+def right(tf):
+	print "LEFT"
+	 
+	GPIO.output(Motor2A,GPIO.LOW)
+	GPIO.output(Motor2B,GPIO.HIGH)
+	GPIO.output(Motor2E,GPIO.HIGH)
+	 
+	sleep(tf)
+ 
+def stop():
+	print "Now stop"
+	GPIO.output(Motor1E,GPIO.LOW)
+	GPIO.output(Motor2E,GPIO.LOW)
+
+@contextlib.contextmanager
+def raw_mode(file):
+    old_attrs = termios.tcgetattr(file.fileno())
+    new_attrs = old_attrs[:]
+    new_attrs[3] = new_attrs[3] & ~(termios.ECHO | termios.ICANON)
+    try:
+        termios.tcsetattr(file.fileno(), termios.TCSADRAIN, new_attrs)
+        yield
+    finally:
+        termios.tcsetattr(file.fileno(), termios.TCSADRAIN, old_attrs)
+
+
+def main():
+    print 'exit with ^C or ^D'
+    with raw_mode(sys.stdin):
+        try:
+            while True:
+                ch = sys.stdin.read(1)
+                if not ch or ch == chr(4):
+                    break
+                #print '%02x' % ord(ch),
+		sleep_time = 0.03
+		if ch == 'w':
+			foward(sleep_time)
+			stop()
+		elif ch == 's':
+			backward(sleep_time)
+			stop()
+		elif ch == 'a':
+			left(sleep_time)
+			stop()
+		elif ch == 'd':
+
